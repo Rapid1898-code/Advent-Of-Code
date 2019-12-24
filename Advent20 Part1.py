@@ -15,7 +15,7 @@ temp_portals = []
 
 
 def read_input():
-    file = open("Advent20 Part1 Example01.txt", "r")
+    file = open("Advent20 Part1 Example03.txt", "r")
     for line in file:
         liste.append(line.rstrip('\n'))
     file.close()
@@ -26,9 +26,9 @@ def read_corners():
     corners['LDO'] = (2,len(liste)-1)
     corners['RDO'] = (len(liste[2])-1, len(liste)-1)
 
-    for i in range(len(liste)-1):
-        for j in range(len(liste[i])-1):
-            if (liste[i][j].isalpha() or liste[i][j] == ' ') and j > 8 and i > 8:
+    for i in range(len(liste)-2):
+        for j in range(len(liste[i])-2):
+            if (liste[i][j].isalpha() or liste[i][j] == ' ') and j > 2 and i > 2:
                 corners['LUI'] = (j, i)
                 temp_x = j
                 while liste[i][temp_x] != '#' and liste[i][temp_x] != '.':
@@ -46,15 +46,15 @@ def read_points():
     temp_line_innerdown = corners['LDI'][1]
     temp_line_innerleft = corners['LUI'][0]
     temp_line_innerright = corners['RDI'][0]
-    for j in range(len(liste[2])):
+    for j in range(len(liste[2])-4):
         if liste[0][j].isalpha():       # check highest line outside
             temp_string = liste[0][j] + liste[1][j]
             if temp_string not in points1: points1[temp_string] = (j,2,'D')
             else: points2[temp_string] = (j,2,'D')
-        if liste[len(liste)-2][j].isalpha():        # check lowest line outside
-            temp_string = liste[len(liste)-2][j] + liste[len(liste)-1][j]
-            if temp_string not in points1: points1[temp_string] = (j, len(liste)-3, 'U')
-            else: points2[temp_string] = (j, len(liste)-3, 'U')
+        if liste[len(liste)-4][j].isalpha():        # check lowest line outside
+            temp_string = liste[len(liste)-5][j] + liste[len(liste)-4][j]
+            if temp_string not in points1: points1[temp_string] = (j, len(liste)-6, 'U')
+            else: points2[temp_string] = (j, len(liste)-6, 'U')
         if liste[temp_line_innerup][j].isalpha() and j > 2 and j <= len(liste[2])-3:   # check highest line inside
             temp_string = liste[temp_line_innerup][j] + liste[temp_line_innerup+1][j]
             if temp_string not in points1: points1[temp_string] = (j,temp_line_innerup-1, 'U')
@@ -64,15 +64,15 @@ def read_points():
             if temp_string not in points1: points1[temp_string] = (j,temp_line_innerdown+1, 'D')
             else: points2[temp_string] = (j,temp_line_innerdown+1, 'D')
 
-    for j in range(len(liste)):
+    for j in range(len(liste)-5):
         if liste[j][0].isalpha() and j > 2 and j <= len(liste)-3:       # check left outside
             temp_string = liste[j][0:2]
             if temp_string not in points1: points1[temp_string] = (2,j,'R')
             else: points2[temp_string] = (2,j,'R')
-        if liste[j][len(liste[2])-2].isalpha() and j > 2 and j <= len(liste) - 3:       # check right outside
-            temp_string = liste[j][len(liste[2])] + liste[j][len(liste[2])+1]
-            if temp_string not in points1: points1[temp_string] = (len(liste[2])-1,j,'L')
-            else: points2[temp_string] = (len(liste[2])-1,j,'L')
+        if liste[j][len(liste[2])-6].isalpha() and j > 2 and j <= len(liste) - 3:       # check right outside
+            temp_string = liste[j][len(liste[2])-6] + liste[j][len(liste[2])-5]
+            if temp_string not in points1: points1[temp_string] = (len(liste[2])-7,j,'L')
+            else: points2[temp_string] = (len(liste[2])-7,j,'L')
         if liste[j][temp_line_innerleft].isalpha() and j > 2 and j <= len(liste) - 3:   # check left inside
             temp_string = liste[j][temp_line_innerleft] + liste[j][temp_line_innerleft+1]
             if temp_string not in points1: points1[temp_string] = (temp_line_innerleft-1,j,'L')
@@ -81,6 +81,17 @@ def read_points():
             temp_string = liste[j][temp_line_innerright-1] + liste[j][temp_line_innerright]
             if temp_string not in points1: points1[temp_string] = (temp_line_innerright+1,j,'R')
             else: points2[temp_string] = (temp_line_innerright+1,j,'R')
+
+def fillup():
+    for i, s in enumerate(liste):
+        for j in range(len(liste[2])+4 - len(s)):
+            s += '#'
+        liste[i] = s
+    temp = ''
+    for i in range(len(liste[2])+4):
+        temp += '#'
+    for i in range(3):
+        liste.append(temp)
 
 def check_point(act_dir):
     temp_directions = []
@@ -99,7 +110,11 @@ def go_direction(dir):
 
 read_input()                # read input file
 read_corners()              # find corners of the field
+print(corners)
+fillup()                    # placeholder in form of # on right and down side
 read_points()               # read all points aka teleports
+
+
 x = points1['AA'][0]  # find start point
 y = points1['AA'][1]
 pos_directions = check_point('')
@@ -107,7 +122,9 @@ if len(pos_directions) == 1: paths.append([x,y,pos_directions[0],1])
 else: print ('Error with Start Position')
 
 print('Points1: ',points1)
+print(len(points1))
 print('Points2: ',points2)
+print(len(points2))
 
 while paths != []:
     x = paths[0][0]
@@ -128,14 +145,16 @@ while paths != []:
     if liste[y][x].isalpha():
         if portal == 'AA': break
 
-        if dir == 'D': portal = liste[y][x]+liste[y + 1][x]
-        if dir == 'U': portal = liste[y - 1][x] + liste[y][x]
-        if dir == 'R': portal = liste[y][x] + liste[y][x + 1]
-        if dir == 'L': portal = liste[y][x - 1] + liste[y][x]
+        if dir == 'D': portal = liste[y][x]+liste[y+1][x]
+        if dir == 'U': portal = liste[y-1][x] + liste[y][x]
+        if dir == 'R': portal = liste[y][x] + liste[y][x+1]
+        if dir == 'L': portal = liste[y][x-1] + liste[y][x]
 
         if portal == 'ZZ':
             if steps < min_steps: min_steps = steps
         elif portal not in ('AA','ZZ'):
+            print('Portal: ',portal)
+            print('x:',x,'y:',y)
             addr1 = points1[portal]
             addr2 = points2[portal]
             if dir == 'D':
