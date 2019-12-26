@@ -10,7 +10,7 @@ while True:
     result = hashlib.md5(temp_try.encode())
     result_hex = result.hexdigest()
 
-    for i in range(5):
+    for i in range(6):
         # print(result_hex[i])
         # print(result_hex[i]!="0")
         if result_hex[i] != "0": check_ungleich_zero = True
