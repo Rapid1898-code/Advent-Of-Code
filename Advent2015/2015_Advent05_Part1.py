@@ -32,5 +32,3 @@ for string in liste:
     if check_vowels(string) and check_twiceletter(string) and check_notstring(string): count += 1
 
 print(count)
-
-

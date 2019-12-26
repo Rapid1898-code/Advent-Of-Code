@@ -1,5 +1,6 @@
 liste = []; presents = []
 length = 0; width = 0; height = 0; square_feet = 0
+
 file = open("Advent02.txt", "r")    # Input-Elemente aus Datei in Liste lesen
 for line in file:
     liste.append(line.rstrip())
