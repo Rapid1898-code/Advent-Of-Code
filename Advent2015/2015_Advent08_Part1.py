@@ -34,11 +34,11 @@ for line in lines:
             count_overall += 2
             single_overall += 2
         elif line[idx] == '\\' and line[idx+1] != 'x' and line[idx+1] != '"':
-            idx += 1
+            idx += 2
             count_memory += 1
             single_memory += 1
-            count_overall += 1
-            single_overall += 1
+            count_overall += 2
+            single_overall += 2
         else:
             idx += 1
             count_memory += 1
