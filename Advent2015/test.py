@@ -1,17 +1,16 @@
-from itertools import combinations
-# >>> [comb for i in range(1, 20) for comb in combinations(vals, i) if sum(comb) == target]
-# [(114, 156), (57, 99, 114)]
+import copy
+liste = [['.', '#', '.', '#', '.', '#'], ['.', '.', '.', '#', '#', '.']]
+print(liste)
+temp_liste = copy.deepcopy(liste)
+temp_liste[0][2] = '!'
+print(temp_liste)
+print(liste)
 
-vals = [57, 71, 87, 97, 99, 101, 103, 113, 114, 115, 128, 129, 131, 137, 147, 156, 163, 186]
-target = 270
-result = []
-# for i in range(1,20):
-#     for comb in combinations(vals,i):
-#         if sum(comb) == target: result.append(comb)
-#
-# print(result)
-
-for comb in combinations (vals,2):print(comb)
+num1 = [[1,2,3,4,5]]
+num2 = copy.deepcopy(num1)
+num2[0][2] = 9
+print(num1)
+print(num2)
 
 
 
