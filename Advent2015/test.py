@@ -1,16 +1,14 @@
-import copy
-liste = [['.', '#', '.', '#', '.', '#'], ['.', '.', '.', '#', '#', '.']]
-print(liste)
-temp_liste = copy.deepcopy(liste)
-temp_liste[0][2] = '!'
-print(temp_liste)
-print(liste)
+set1 = {1,2,3}
+set2 = set()
+print(set1)
+set2.add(4)
+set2.add(5)
+set2.add(6)
+print(set2)
 
-num1 = [[1,2,3,4,5]]
-num2 = copy.deepcopy(num1)
-num2[0][2] = 9
-print(num1)
-print(num2)
+set1 = set2
+print(set1)
+set1.update
 
 
 

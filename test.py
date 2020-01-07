@@ -1,18 +1,12 @@
-with open('Advent18Input2.txt') as f:
-    src = [x.strip() for x in f.readlines()]
-number_cols = len(src[0])
-number_rows = len(src)
-liste = [[0] * number_cols for i in range(number_rows)]
-for idx_i, i in enumerate(src):
-    for idx_j, j in enumerate(i):
-        liste[idx_i][idx_j] = src[idx_i][idx_j]
-print(src)
-print(liste)
+str2 = "HOLAX"
+print("HO" in str2)
+count = str2.find("HO")
+print(count)
 
-temp_liste = liste.copy()
-temp_liste[0][2] = '!'
-print(temp_liste)
-print(liste)
+str = "Messi is the best soccer player"
+print("soccer" in str)
+anz = str.find("soccer")
+print(anz)
 
 
 

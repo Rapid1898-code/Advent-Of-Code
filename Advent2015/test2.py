@@ -1,7 +1,4 @@
-def bit_not(n, numbits=16):
-    return (1 << numbits) - 1 - n
-
-x = 123
-erg = bit_not(x)
-print(erg)
-
+import re
+m=[]
+[m.start() for m in re.finditer('test', 'test test test test')]
+print(m)
