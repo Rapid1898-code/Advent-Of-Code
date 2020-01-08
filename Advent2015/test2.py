@@ -1,39 +1,17 @@
-import random
-
-start_molecule = "...molecule does here..."
-
-def day19_part1():
-    rules = []
-    for line in open('Advent19Input.txt'):
-        h, r = line.split(' => ')
-        rules.append((h, r.strip()))
-    new_molecules = set()
-    for head, rep in rules:
-        for i in xrange(len(start_molecule)):
-            if start_molecule[i:i+len(head)] == head:
-                m = start_molecule[:i] + rep + start_molecule[i+len(head):]
-                new_molecules.add(m)
-    print (len(new_molecules))
-
-def day19_part2():
-    rules = []
-    for line in open('Advent19Input.txt'):
-        h, r = line.split(' => ')
-        rules.append((h, r.strip()))
-
-    steps = 0
-    mol = start_molecule[:]
-    r = 0
-    while r < len(rules):
-        head, rep = rules[r]
-        i = mol.find(rep)
-        if i != -1:
-            steps += 1
-            mol = mol[:i] + head + mol[i+len(rep):]
-            r = 0
-            random.shuffle(rules)
-            if mol == 'e':
-                print (steps)
-                return
+def prime_factors(n):
+    i = 2
+    factors = []
+    while i * i <= n:
+        if n % i:
+            i += 1
         else:
-            r += 1
+            n //= i
+            factors.append(i)
+    if n > 1:
+        factors.append(n)
+    return factors
+
+test = prime_factors(600851475143)
+print(test)
+test = prime_factors(40)
+print(test)
