@@ -1,6 +1,6 @@
 import itertools
 kombi=[]
-iter_kombi = itertools.product([1,2,3,4,5],repeat=9)
+iter_kombi = itertools.product([1,2,3,4,5],repeat=8)
 for i in iter_kombi: kombi.append(i)
 
 enemy = (100,9)
