@@ -1,13 +1,23 @@
-str2 = "HOLAX"
-print("HO" in str2)
-count = str2.find("HO")
-print(count)
+# mylist = [1,2,3]
+# for i in mylist: print(i)
+#
+# mylist = [x*x for x in range(5)]
+# print(mylist)
+#
+# mylist = [x-1 for x in range(0,6,2)]
+# print(mylist)
 
-str = "Messi is the best soccer player"
-print("soccer" in str)
-anz = str.find("soccer")
-print(anz)
+# mygenerator =(x*x for x in range(1,5))
+# print(mygenerator)
+# for i in mygenerator: print(i)
 
+def createGenerator(n):
+    mylist = range(n)
+    for i in mylist:
+        yield i*i
+
+mygenrator = createGenerator(3)
+for i in mygenrator: print(i)
 
 
 
