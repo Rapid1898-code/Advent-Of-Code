@@ -43,12 +43,7 @@ for l in lines:
             scr[0][x] = last_char
 
 
-sum = 0
-for i in scr:
-    for j in i:
-        if j == "#": sum += 1
-print(sum)
-
+for i in scr: print(i)
 
 
 
