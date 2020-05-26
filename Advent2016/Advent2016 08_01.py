@@ -18,30 +18,41 @@ for l in lines:
         for i in range(y):
             for j in range(x): scr[i][j] = "#"
 
-        print(scr)
+        print(l)
+        for i in scr: print(i)
+        print("")
 
     elif "rotate row" in l:
         l = l.replace("rotate row ","")
         tmp_pos_y = l.find("y=") + 2
         tmp_end_y = l.find ("by ")
         tmp_by = l.find ("by ") + 3
-        y = int(l[tmp_pos_y:tmp_end_y])
+        y = int(l[tmp_pos_y:tmp_end_y].strip())
         by = int(l[tmp_by:].strip())
         for i in range(by):
             last_char = scr[y][x_def-1]
             scr[y].pop()
             scr[y].insert(0,last_char)
 
-        print(scr)
-
+        print(l)
+        for i in scr: print(i)
+        print("")
 
     elif "rotate column" in l:
-        l = l.replace ("rotate column  ", "")
+        l = l.replace ("rotate column ", "")
+        tmp_pos = l.find("x=") + 2
+        tmp_end = l.find ("by ")
+        tmp_by = l.find ("by ") + 3
+        x = int(l[tmp_pos:tmp_end].strip())
+        by = int(l[tmp_by:].strip())
+        for i in range(by):
+            last_char = scr[y_def-1][x]
+            for j in range(y_def-1,0,-1): scr[j][x] = scr[j-1][x]
+            scr[0][x] = last_char
 
-
-
-
-
+        print(l)
+        for i in scr: print (i)
+        print ("")
 
 
 
