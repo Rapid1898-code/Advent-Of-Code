@@ -8,9 +8,9 @@ bots = {}
 output = {}
 ongoing = True
 
-while True:
+while ongoing:
     for idx_l, cont in enumerate(lines):
-        if ongoing == False: break
+        if 0 in output and 1 in output and 2 in output: ongoing = False
         idx = 0
         start = 0
         if cont == "": continue
@@ -28,18 +28,18 @@ while True:
         elif l[0] == "bot":
             bot = int(l[1])
             if bot not in bots or bots[bot][0] == 0: continue
-            if bots[bot] == [17,61]:
-                print ("Ergebnis Bot: ",bot)
+            #if bots[bot] == [17,61]:
+            #    print ("Ergebnis Bot: ",bot)
 
-                bots = {k: v for k, v in sorted (bots.items (), key=lambda item: item[0], reverse=False)}
-                output = {k: v for k, v in sorted (output.items (), key=lambda item: item[0], reverse=False)}
-                print ("Working On: ", l)
-                print ("Bots: ", bots)
+                #bots = {k: v for k, v in sorted (bots.items (), key=lambda item: item[0], reverse=False)}
+                #output = {k: v for k, v in sorted (output.items (), key=lambda item: item[0], reverse=False)}
+                #print ("Working On: ", l)
+                #print ("Bots: ", bots)
                 # print ("Input: ",lines)
-                print ("Output: ", output)
+                #print ("Output: ", output)
 
-                ongoing = False
-                break
+                #ongoing = False
+                #break
             if "output" not in l:
                 bot2 = int(l[6])
                 bot3 = int(l[11])
@@ -88,5 +88,5 @@ while True:
         print ("Bots: ",bots)
         #print ("Input: ",lines)
         print ("Output: ",output,"\n")
-
+print (output[0]*output[1]*output[2])
 
