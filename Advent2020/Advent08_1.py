@@ -27,31 +27,56 @@ def readInput(fn,mode=0):
         listInp = [int (x) for x in listInp]
     return(listInp)
 
-def runInstructions(inputList):
-    idx = 0
-    visited = []
-    accumulator = 0
-    loop = False
-    while True:
-        if idx in visited:
-            loop = idx
-            break
-        if inpList[idx][0] == "nop":
-            visited.append(idx)
-            idx += 1
-        elif inpList[idx][0] == "acc":
-            accumulator += inpList[idx][1]
-            visited.append (idx)
-            idx += 1
-        elif inpList[idx][0] == "jmp":
-            visited.append (idx)
-            idx += inpList[idx][1]
-        else:
-            print(f"Error - Wrong insturction: {inpList[idx][0]}")
-    return(accumulator, loop)
+# def runInstructions(inputList):
+#     idx = 0
+#     visited = []
+#     accumulator = 0
+#     loop = False
+#     while True:
+#         if idx in visited:
+#             loop = idx
+#             break
+#         if inpList[idx][0] == "nop":
+#             visited.append(idx)
+#             idx += 1
+#         elif inpList[idx][0] == "acc":
+#             accumulator += inpList[idx][1]
+#             visited.append (idx)
+#             idx += 1
+#         elif inpList[idx][0] == "jmp":
+#             visited.append (idx)
+#             idx += inpList[idx][1]
+#         else:
+#             print(f"Error - Wrong insturction: {inpList[idx][0]}")
+#     return(accumulator, loop)
 
 inpList = readInput("Advent08.txt",mode=3)
 
-erg = runInstructions(inpList)
+# erg = runInstructions(inpList)
 
-print(f"Accumulated value: {erg[0]}, Loop at line: {erg[1]}")
+def stepWork(instruction, value, actualIDX, actualAccumulator):
+    # print(f"DEBUG: {instruction, value, actualIDX, actualAccumulator}")
+    accumulatorNew = actualAccumulator
+    idxNew = actualIDX
+    if instruction == "nop":
+        idxNew += 1
+    elif instruction == "acc":
+        idxNew += 1
+        accumulatorNew += value
+    elif instruction == "jmp":
+        idxNew = actualIDX + value
+    else:
+        print (f"Error - Wrong insturction: {inpList[idx][0]}")
+        input ("Programm stopped and waiting for input...")
+    return(idxNew,accumulatorNew)
+
+idx = 0
+visited = []
+accumulator = 0
+while True:
+    if idx in visited:
+        break
+    visited.append(idx)
+    idx, accumulator = stepWork(inpList[idx][0],inpList[idx][1],idx,accumulator)
+
+print(f"Accumulated value: {accumulator}, Loop at line: {idx}")
