@@ -1,4 +1,4 @@
-import itertools
+import math
 
 def readInput(fn,mode=0):
     """
@@ -29,41 +29,42 @@ def readInput(fn,mode=0):
         listInp = [int (x) for x in listInp]
     return(listInp)
 
-inpList = readInput("Advent10.txt",mode=1)
-inpList.sort()
+def calcLCM(a, b):
+    return abs(a*b) // math.gcd(a, b)
 
+inpList = readInput("Advent13.txt",mode=0)
+target = int(inpList[0])
+times = inpList[1].split(",")
+timesDiff = []
+for idx,cont in enumerate(times):
+    if cont == "x":
+        continue
+    else:
+        timesDiff.append((int(cont),idx))
+print(timesDiff)
 
-listNumbersToSkip = []
-idx = 0
-inpList.append(inpList[len(inpList)-1] + 3)
-inpList.insert(0,0)
-print(inpList)
-
-# inpList = [0, 3, 4, 7, 10, 11, 14, 17, 18, 19, 20, 24, 25, 28, 31, 34, 35, 38, 39, 42, 45, 46, 47, 48, 49, 52]
+tmperg = 149669104223100 // timesDiff[0][0]
+timeCheck = tmperg * timesDiff[0][0]
 
 while True:
-    if idx + 3 < len(inpList) and inpList[idx+3] == inpList[idx] + 3:
-        listNumbersToSkip.append(inpList[idx+1])
-        listNumbersToSkip.append(inpList[idx+2])
-        idx += 3
-    elif idx + 2 < len(inpList) and inpList[idx+2] == inpList[idx] + 2:
-        listNumbersToSkip.append(inpList[idx+1])
-        idx += 2
-    else: idx += 1
-    if idx == len(inpList):
-        break
+    timeCheck += timesDiff[0][0]
+    found = True
+    for checkElem in timesDiff[1:]:
+        if checkElem[0] - (timeCheck % checkElem[0]) != checkElem[1]:
+            found = False
+            break
+    if found: break
+    print(timeCheck)
+print(timeCheck)
 
-# print(listNumbersToSkip)
-# erg = 1
-# for i in range(1,len(listNumbersToSkip)+1):
-#     erg *= i
-# print(erg + 2)
+# lcm = timesDiff[0][0]
+# for i in timesDiff[1:]:
+#     if i == "x":
+#         continue
+#     lcm = calcLCM(lcm, i[0]+i[1])
+#
+# print(f"Earliest Timestamp: {lcm}")
 
-poss = [1]+[0]*inpList[-1]
-for i in inpList[1:]:
-    print(i)
-    poss[i] = poss[i-1] + poss[i-2] + poss[i-3]
-print(poss)
 
 
 
