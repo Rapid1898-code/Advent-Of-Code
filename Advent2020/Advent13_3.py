@@ -74,7 +74,7 @@ for i in listDiffDetails:
 
 print(f"BigStart: {bigStart}, Bigdiff: {bigDiff}")
 
-start = bigStart + 116000000000000
+start = bigStart + 100000000000000
 # start = bigStart
 while True:
     start += bigDiff
