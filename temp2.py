@@ -1,4 +1,2 @@
-import itertools
-lst = list(itertools.product([0, 1], repeat=3))
-
-print(lst)
+s = "sdlakfj"
+print(list(s))
