@@ -39,44 +39,111 @@ for elem in inpTmp:
         continue
     if part == 0:
         rulesCont = []
-        rulesNr = elem.split(": ")[0]
-        tmpRuleCont = list(elem.split(": ")[1])
+        rulesNr = int(elem.split(": ")[0])
+        tmpRuleCont = list(elem.split(": ")[1].split(" "))
         for i in tmpRuleCont:
             if i != " " and i != '"':
-                if i not in ["|","a","b"]:
+                if i not in ["|",'"a"','"b"']:
                     rulesCont.append(int(i))
-                else:
+                elif i == "|":
                     rulesCont.append (i)
-        rulesDict[int(rulesNr)] = rulesCont
+                elif i == '"a"':
+                    rulesCont.append ("a")
+                elif i == '"b"':
+                    rulesCont.append ("b")
+        rulesDict[rulesNr] = rulesCont
     elif part == 1:
         messagesList.append(elem)
-print(rulesDict)
+
+rulesDict = {k: v for k, v in sorted(rulesDict.items(),
+         key=lambda item: item[0])}
+
+for key,val in rulesDict.items():
+    print(key,val)
 print(messagesList)
+
+longMessage = 0
+for i in messagesList:
+    if len(i) > longMessage:
+        longMessage = len(i)
+print(f"Long Message: {longMessage}")
 
 searchRules = [rulesDict[0]]
 print(f"SearchRules Start: {searchRules}")
 endRun = False
+
+ergList = []
 while not endRun:
     endRun = True
-    print (f"SearchRules During: {searchRules}")
-    for listElements in searchRules:
+    # print (f"SearchRules During: {searchRules}")
+    print(f"SearchRules: {len(searchRules)}")
+    print(f"ErgList: {len(ergList)}")
+    # if len(ergList) > 150000:
+    #     break
+    # input()
+
+    for idx, listElements in enumerate(searchRules):
+        # e.g. [8, 1, 1]
+        countAB = 0
+        onlyAB = True
+        for i in listElements:
+            if i in ["a","b"]:
+                countAB +=1
+                if countAB > longMessage:
+                    break
+            else:
+                onlyAB = False
+                break
+
+        if onlyAB:
+            # print(listElements)
+            # print(f"IDX: {idx}")
+            ergList.append(listElements)
+            del searchRules[idx]
+            endRun = False
+            break
+
         for elemIDX, elemCont in enumerate (listElements):
+            # print("DEBUG:",elemIDX,elemCont)
+            # print("DEBUG2: ",rulesDict[elemCont])
+            # input()
+
             if elemCont not in ["a","b"]:
                 if "|" in rulesDict[elemCont]:
                     newListElements = listElements.copy ()
-                    listElements.insert (elemIDX, rulesDict[elemCont][1])
-                    listElements.insert (elemIDX, rulesDict[elemCont][0])
-                    del listElements[elemIDX+2]
-                    newListElements.insert (elemIDX, rulesDict[elemCont][4])
-                    newListElements.insert (elemIDX, rulesDict[elemCont][3])
-                    del newListElements[elemIDX+2]
+                    part = 0
+                    tempLeft = []
+                    tempRight = []
+                    for tmpElm in rulesDict[elemCont]:
+                        if tmpElm == "|":
+                            part = 1
+                        elif part == 0:
+                            tempLeft.append(tmpElm)
+                        elif part == 1:
+                            tempRight.append(tmpElm)
+                    del listElements[elemIDX]
+                    for tmpElm in reversed(tempLeft):
+                        listElements.insert (elemIDX, tmpElm)
+
+                    del newListElements[elemIDX]
+                    for tmpElm in reversed(tempRight):
+                        newListElements.insert (elemIDX, tmpElm)
                     searchRules.append(newListElements)
                     endRun = False
                     break
 
                 # print(rulesDict[elemCont])
                 if rulesDict[elemCont][0] in ["a","b"]:
-                    listElements[elemIDX] = rulesDict[elemCont][0]
+                    del listElements[elemIDX]
+                    listElements.insert (elemIDX, rulesDict[elemCont][0])
+                    endRun = False
+                    break
+                else:
+                    del listElements[elemIDX]
+                    for tmpElm in reversed(rulesDict[elemCont]):
+                        listElements.insert (elemIDX, tmpElm)
+                    endRun = False
+                    break
         if not endRun:
             break
 
@@ -85,12 +152,17 @@ for elemIDX, elemCont in enumerate(searchRules):
     searchRules[elemIDX] = "".join(elemCont)
 print(f"Converted to String: {searchRules}")
 
-lenString = len(searchRules[0])
+for ergIDX, ergCont in enumerate(ergList):
+    ergList[ergIDX] = "".join(ergCont)
+print(f"Converted to String ERG: {ergList}")
+
+# lenString = len(searchRules[0])
 countMessages = 0
 for elem in messagesList:
-    if elem in searchRules:
+    if elem in ergList:
         print(f"{elem}")
         countMessages += 1
+
 print(f"Matched Message: {countMessages}")
 
 
