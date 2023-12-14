@@ -31,9 +31,9 @@ if __name__ == '__main__':
       and v["green"] <= 13 \
       and v["blue"] <= 14:
         countSummary += k
-    print(k, v)
-    print(countSummary)
-    input("Press!")
+    # print(k, v)
+    # print(countSummary)
+    # input("Press!")
 
 
 
