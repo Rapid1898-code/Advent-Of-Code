@@ -18,13 +18,37 @@ for y,l in enumerate(lines):
       wX = x
     if e == "#":
       listObstacles.append((y,x))
-print(wY, wX)
-print(listObstacles)
-print(listPositions)
-exit()
+# print(wY, wX)
+# print(listObstacles)
+# print(listPositions)
+# exit()
 
-for idx, e in enumerate(listObstacles):
+finalOut = []
+for idx, e in enumerate(listObstacles):  
   workIDX = idx + 1
-  while workIDX < len(lsitObstacles):
-    if listObstacles[workIDX[0]] = 
+  foundElemsList = []
+  while workIDX < len(listObstacles):
+    if listObstacles[workIDX][0] == e[0] + 1:
+      foundElemsList.append(listObstacles[workIDX])
+    workIDX += 1
+
+  for e2 in foundElemsList:
+    workIDX = idx + 1    
+    while workIDX < len(listObstacles):
+
+      print(e, e2)
+      print(workIDX)
+      print(listObstacles[workIDX])
+      print(finalOut)
+      input("Press1")
+
+
+      if listObstacles[workIDX][1] == e2[1] - 1:
+        # print(e, e2, listObstacles[workIDX])
+        # input("Press!")
+
+        finalOut.append((e, e2, listObstacles[workIDX]))                        
+      workIDX += 1    
+
+      
 
