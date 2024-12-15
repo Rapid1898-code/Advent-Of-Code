@@ -9,7 +9,24 @@ with open(fn, encoding="utf8", errors="ignore") as f:
   lines = f.read().splitlines()
 baseString = lines[0]
 
-idxList = [x.start() for x in re.finditer("mul", baseString)]
+workList = [x.start() for x in re.finditer("mul", baseString)]
+lDONT = [x.start() for x in re.finditer("don't()", baseString)]
+worker = [x.start() for x in re.finditer("do()", baseString)]
+lDO = []
+for e in worker:
+  if e not in lDONT:
+    lDO.append(e)    
+
+idxList = []
+flagCount = True
+for i in range(len(baseString)):
+  if i in workList and flagCount:
+    idxList.append(i)
+  if i in lDONT:
+    flagCount = False
+  if i in lDO:
+    flagCount = True
+
 ergSum = 0
 for checkIDX in idxList:
   workIDX = checkIDX + 3
