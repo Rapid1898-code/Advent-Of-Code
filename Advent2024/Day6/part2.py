@@ -27,8 +27,34 @@ finalOut = []
 for idx, e in enumerate(listObstacles):  
   workIDX = idx + 1
   foundElemsList = []
+
   while workIDX < len(listObstacles):
     if listObstacles[workIDX][0] == e[0] + 1:
+      foundElemsList.append(listObstacles[workIDX])
+    workIDX += 1
+  for e2 in foundElemsList:
+    workIDX = idx + 1    
+    while workIDX < len(listObstacles):
+
+      # print(e, e2)
+      # print(workIDX)
+      # print(listObstacles[workIDX])
+      # print(finalOut)
+      # input("Press1")
+
+      if listObstacles[workIDX][1] == e2[1] - 1:
+        # print(e, e2, listObstacles[workIDX])
+        # input("Press!")
+        finalOut.append((e, e2, listObstacles[workIDX]))                        
+      workIDX += 1    
+
+  while workIDX < len(listObstacles):
+    if listObstacles[workIDX][1] == e[1] + 1:
+
+      # print(listObstacles[workIDX])
+      # input("Press!")
+
+
       foundElemsList.append(listObstacles[workIDX])
     workIDX += 1
 
@@ -36,19 +62,23 @@ for idx, e in enumerate(listObstacles):
     workIDX = idx + 1    
     while workIDX < len(listObstacles):
 
-      print(e, e2)
-      print(workIDX)
-      print(listObstacles[workIDX])
-      print(finalOut)
-      input("Press1")
+      # print(e, e2)
+      # print(workIDX)
+      # print(listObstacles[workIDX])
+      # print(finalOut)
+      # input("Press1")
 
-
-      if listObstacles[workIDX][1] == e2[1] - 1:
+      if listObstacles[workIDX][0] == e2[0] - 1:
         # print(e, e2, listObstacles[workIDX])
         # input("Press!")
-
         finalOut.append((e, e2, listObstacles[workIDX]))                        
       workIDX += 1    
+
+
+
+
+
+print(finalOut)
 
       
 
